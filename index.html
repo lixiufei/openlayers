@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>openlayers</title>
+		<script src="js/ol.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/ol.css"/>
+	</head>
+	<body>
+		<button type="button" onclick="changeMap(1)">卫星地图</button>
+		<button type="button" onclick="changeMap(2)">路网地图</button>
+		<div id="map" class="map" style="width: 100%;"></div>
+	</body>
+	
+	<script type="text/javascript">
+		// 改为谷歌卫星地图
+		var mlayer1 = new ol.layer.Tile({
+		    source: new ol.source.XYZ({
+				url: "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"
+		   }),
+		   visible: true
+		});
+		// 改为谷歌路网地图
+		var mlayer2 = new ol.layer.Tile({
+		    source: new ol.source.XYZ({
+				url: "http://www.google.cn/maps/vt?lyrs=r@189&gl=cn&x={x}&y={y}&z={z}"
+		    }),
+			visible: false
+		});
+		var map = new ol.Map({
+        layers: [mlayer1,mlayer2],
+        target: 'map',
+        controls: ol.control.defaults({
+            attributionOptions: {
+				collapsible: false
+            }
+        }),
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        })
+      });
+	  // 切换地图
+	   function changeMap(data){
+		   if(data==1){
+				mlayer1.setVisible(true);
+				mlayer2.setVisible(false);
+		   }else {
+				mlayer1.setVisible(false);
+			   	mlayer2.setVisible(true);
+		   }
+	   }
+	</script>
+</html>
